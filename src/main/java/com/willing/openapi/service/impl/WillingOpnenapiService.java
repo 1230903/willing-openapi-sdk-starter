@@ -1,7 +1,7 @@
 package com.willing.openapi.service.impl;
 
 import com.willing.openapi.base.WillingOpenapiAccessTokenProperties;
-import com.willing.openapi.service.iface.WillingOpenApi;
+import lombok.Data;
 
 /**
  * @author xiaozhou
@@ -9,9 +9,8 @@ import com.willing.openapi.service.iface.WillingOpenApi;
  * <p>
  * </p>
  */
+@Data
 public class WillingOpnenapiService {
-
-    private WillingOpenApi willingOpenApi;
 
     /**
      * willing-开放平台-指定应用的appId
@@ -32,21 +31,5 @@ public class WillingOpnenapiService {
         this.appId = properties.getAppId();
         this.appSecret = properties.getAppSecret();
         this.url = properties.getUrl();
-    }
-
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-    public WillingOpenApi getWillingOpenApi() {
-        return willingOpenApi;
     }
 }

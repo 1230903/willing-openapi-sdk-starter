@@ -1,6 +1,7 @@
 package com.willing.openapi.entity.vo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map;
  * <p>
  * </p>
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class CompanyDetailResponse extends BaseResponse implements Serializable {
 
@@ -19,7 +21,6 @@ public class CompanyDetailResponse extends BaseResponse implements Serializable 
     @Data
     public static class CompanyDetailDTO implements Serializable {
         private String companyId;
-
         private String abbreviation;
         private String companyName;
         private String creditCode;

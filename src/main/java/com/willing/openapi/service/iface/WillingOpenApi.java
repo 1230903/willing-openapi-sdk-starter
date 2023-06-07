@@ -1,12 +1,10 @@
 package com.willing.openapi.service.iface;
 
-import com.github.lianjiatech.retrofit.spring.boot.core.RetrofitClient;
-import com.github.lianjiatech.retrofit.spring.boot.interceptor.Intercept;
-import com.willing.openapi.base.WillingAccessTokenInterceptor;
+import com.dtflys.forest.annotation.*;
+import com.willing.openapi.bean.SimpleCustomInterceptor;
+import com.willing.openapi.constans.Constants;
 import com.willing.openapi.entity.vo.CompanyDetailResponse;
 import com.willing.openapi.exception.WillingOpenApiErrorException;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 import static com.willing.openapi.constans.WillingOpenApiPath.Company.COMPANY_DETAIL;
 
@@ -17,8 +15,9 @@ import static com.willing.openapi.constans.WillingOpenApiPath.Company.COMPANY_DE
  * <p>
  * </p>
  */
-@RetrofitClient(baseUrl = "${willing.openapi.url}")
-@Intercept(exclude = {"/auth/token"}, handler = WillingAccessTokenInterceptor.class)
+@Backend("httpclient")
+@BaseRequest(interceptor = SimpleCustomInterceptor.class)
+@ForestClient
 public interface WillingOpenApi {
 
     /**
@@ -29,6 +28,6 @@ public interface WillingOpenApi {
      * @return
      * @throws WillingOpenApiErrorException
      */
-    @GET(COMPANY_DETAIL)
+    @Get(Constants.URL_SUFFIX + COMPANY_DETAIL)
     CompanyDetailResponse getCompanyDetail(@Query("company_id") String companyId, @Query("company_name") String companyName) throws WillingOpenApiErrorException;
 }

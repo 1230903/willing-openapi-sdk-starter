@@ -28,5 +28,4 @@ public class WillingOpenapiAccessTokenProperties {
      * willingOpenapi服务地址
      */
     private String url;
-
 }

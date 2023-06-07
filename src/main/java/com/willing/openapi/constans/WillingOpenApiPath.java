@@ -8,10 +8,6 @@ package com.willing.openapi.constans;
  */
 public interface WillingOpenApiPath {
 
-    String TEST_URL = "https://open.demo.weiling.cn" + Constants.URL_SUFFIX;
-
-    String PRODUCT_URL = "https://openapi.weiling.cn/openapi" + Constants.URL_SUFFIX;
-
     interface Auth {
         String AUTH_TOKEN = "/auth/token";
     }
