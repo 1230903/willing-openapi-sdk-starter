@@ -1,17 +1,13 @@
 package com.willing.openapi.config;
 
-import com.dtflys.forest.Forest;
-import com.dtflys.forest.ForestGenericClient;
-import com.dtflys.forest.annotation.ForestClient;
-import com.dtflys.forest.springboot.ForestAutoConfiguration;
+import com.willing.openapi.base.CustomHttpClient;
 import com.willing.openapi.base.WillingOpenapiAccessTokenProperties;
-import com.willing.openapi.bean.SimpleCustomInterceptor;
 import com.willing.openapi.service.impl.WillingOpnenapiService;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
  * @author xiaozhou
@@ -21,20 +17,21 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @EnableConfigurationProperties(WillingOpenapiAccessTokenProperties.class)
-@Import({ForestAutoConfiguration.class})
 public class OpenapiAccessTokenAutoConfiguration {
 
     private WillingOpenapiAccessTokenProperties properties;
 
     @Bean
-    public WillingOpnenapiService willingOpnenapiService(WillingOpenapiAccessTokenProperties properties) {
-        this.properties = properties;
-        return new WillingOpnenapiService(properties);
+    @ConditionalOnMissingBean(CloseableHttpClient.class)
+    public CloseableHttpClient httpClient() {
+        return new CustomHttpClient(properties).create();
     }
 
     @Bean
-    @ConditionalOnMissingBean(SimpleCustomInterceptor.class)
-    public SimpleCustomInterceptor simpleCustomInterceptor() {
-        return new SimpleCustomInterceptor(properties);
+    @ConditionalOnMissingBean(WillingOpnenapiService.class)
+    public WillingOpnenapiService willingOpnenapiService(WillingOpenapiAccessTokenProperties properties,
+                                                         CloseableHttpClient httpClient) {
+        this.properties = properties;
+        return new WillingOpnenapiService(properties, httpClient);
     }
 }

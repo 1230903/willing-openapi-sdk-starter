@@ -1,12 +1,9 @@
 package com.willing.openapi.service.iface;
 
-import com.dtflys.forest.annotation.*;
-import com.willing.openapi.bean.SimpleCustomInterceptor;
-import com.willing.openapi.constans.Constants;
 import com.willing.openapi.entity.vo.CompanyDetailResponse;
 import com.willing.openapi.exception.WillingOpenApiErrorException;
 
-import static com.willing.openapi.constans.WillingOpenApiPath.Company.COMPANY_DETAIL;
+import java.io.IOException;
 
 
 /**
@@ -15,10 +12,18 @@ import static com.willing.openapi.constans.WillingOpenApiPath.Company.COMPANY_DE
  * <p>
  * </p>
  */
-@Backend("httpclient")
-@BaseRequest(interceptor = SimpleCustomInterceptor.class)
-@ForestClient
 public interface WillingOpenApi {
+
+    /**
+     * 执行
+     *
+     * @param uri  uri
+     * @param data 数据
+     * @return {@link String}
+     * @throws IOException ioexception
+     */
+    String execute(String uri, String data) throws IOException;
+
 
     /**
      * 获取企业详情
@@ -28,6 +33,5 @@ public interface WillingOpenApi {
      * @return
      * @throws WillingOpenApiErrorException
      */
-    @Get(Constants.URL_SUFFIX + COMPANY_DETAIL)
-    CompanyDetailResponse getCompanyDetail(@Query("company_id") String companyId, @Query("company_name") String companyName) throws WillingOpenApiErrorException;
+    CompanyDetailResponse getCompanyDetail(String companyId, String companyName) throws WillingOpenApiErrorException, IOException;
 }

@@ -32,6 +32,19 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
+        <!--Redisson支持-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+
         <!--hutool-->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -43,12 +56,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.26</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dtflys.forest</groupId>
-            <artifactId>forest-spring-boot-starter</artifactId>
-            <version>1.5.31</version>
         </dependency>
 
 

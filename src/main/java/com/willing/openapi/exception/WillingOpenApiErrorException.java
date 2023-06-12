@@ -3,15 +3,17 @@ package com.willing.openapi.exception;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.io.IOException;
+
 @Getter
 @ToString
 public class WillingOpenApiErrorException extends RuntimeException {
-    private int code;
-    private String msg;
+    private final int code;
+    private final String msg;
     /**
      * 详细信息
      */
-    private String details;
+    private final String details;
 
     public WillingOpenApiErrorException(ExceptionEnum errCode) {
         super(errCode.getMsg());
