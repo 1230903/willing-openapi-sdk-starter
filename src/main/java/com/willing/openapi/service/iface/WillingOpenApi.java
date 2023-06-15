@@ -1,5 +1,8 @@
 package com.willing.openapi.service.iface;
 
+import com.dtflys.forest.annotation.BaseRequest;
+import com.dtflys.forest.annotation.Query;
+import com.dtflys.forest.annotation.Request;
 import com.willing.openapi.entity.vo.CompanyDetailResponse;
 import com.willing.openapi.exception.WillingOpenApiErrorException;
 
@@ -12,18 +15,8 @@ import java.io.IOException;
  * <p>
  * </p>
  */
+@BaseRequest(contentType = "application/json",baseURL = "https://open.demo.weiling.cn/")
 public interface WillingOpenApi {
-
-    /**
-     * 执行
-     *
-     * @param uri  uri
-     * @param data 数据
-     * @return {@link String}
-     * @throws IOException ioexception
-     */
-    String execute(String uri, String data) throws IOException;
-
 
     /**
      * 获取企业详情
@@ -33,5 +26,6 @@ public interface WillingOpenApi {
      * @return
      * @throws WillingOpenApiErrorException
      */
-    CompanyDetailResponse getCompanyDetail(String companyId, String companyName) throws WillingOpenApiErrorException, IOException;
+    @Request("/openapi/company/detail")
+    CompanyDetailResponse getCompanyDetail(@Query("company_id") String companyId, @Query("company_name") String companyName) throws WillingOpenApiErrorException, IOException;
 }

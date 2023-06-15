@@ -1,10 +1,11 @@
 package com.willing.openapi.config;
 
-import com.willing.openapi.base.CustomHttpClient;
+import cn.hutool.core.collection.ListUtil;
+import com.dtflys.forest.Forest;
+import com.dtflys.forest.http.ForestRequest;
+import com.dtflys.forest.interceptor.Interceptor;
 import com.willing.openapi.base.WillingOpenapiAccessTokenProperties;
-import com.willing.openapi.service.impl.WillingOpnenapiService;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import com.willing.openapi.service.iface.WillingOpenApi;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,17 +22,46 @@ public class OpenapiAccessTokenAutoConfiguration {
 
     private WillingOpenapiAccessTokenProperties properties;
 
+    /**
+     * openapi
+     *
+     * @param properties 属性
+     * @return {@link WillingOpenApi}
+     */
     @Bean
-    @ConditionalOnMissingBean(CloseableHttpClient.class)
-    public CloseableHttpClient httpClient() {
-        return new CustomHttpClient(properties).create();
+    public WillingOpenApi willingOpenApi(WillingOpenapiAccessTokenProperties properties) {
+        this.properties = properties;
+        return Forest.config()
+//                .setBaseAddress(new ForestAddress("https", null, -1, properties.getUrl()))
+                .setInterceptors(ListUtil.list(false, CustomRequestInterceptor.class))
+                .setMaxConnections(1000)
+                .setConnectTimeout(3000)
+                .setReadTimeout(3000)
+                .client(WillingOpenApi.class);
     }
 
-    @Bean
-    @ConditionalOnMissingBean(WillingOpnenapiService.class)
-    public WillingOpnenapiService willingOpnenapiService(WillingOpenapiAccessTokenProperties properties,
-                                                         CloseableHttpClient httpClient) {
-        this.properties = properties;
-        return new WillingOpnenapiService(properties, httpClient);
+
+    /**
+     * 自定义请求拦截器
+     *
+     * @author xzhou
+     * @date 2023/06/15
+     */
+    public static class CustomRequestInterceptor<T> implements Interceptor<T> {
+
+        @Override
+        public boolean beforeExecute(ForestRequest request) {
+            String url = request.getUrl();
+
+//            ForestRequest<?> getTokenRequest = Forest.get(properties.getUrl() + "/openapi/auth/access_token/get");
+//            getTokenRequest.addQuery("app_id", properties.getAppId());
+//            getTokenRequest.addQuery("app_secret", properties.getAppSecret());
+//            Object execute = getTokenRequest.execute();
+
+            if (!url.contains("access_token")) {
+                request.setUrl(url + "?access_token=" + "ynnyxuEaskH5SItZCpyNrcSzNx3X7-ZxjSthxAPSkulECLC_425P4Dq2a16RQQC9e3OoLsviJgSwSM6rhxDebzdBqbAX23M70Yv62IIXSpF3bA_WflruEJr9-zIX9pqCbYG7fFIbPmBnNZwXzDk-1dyXctmgwCvZnEMU9uAhbWw");
+            }
+            return true;
+        }
     }
 }
