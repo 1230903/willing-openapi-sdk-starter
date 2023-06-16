@@ -1,12 +1,11 @@
 package com.willing.openapi.service.iface;
 
 import com.dtflys.forest.annotation.BaseRequest;
+import com.dtflys.forest.annotation.Get;
 import com.dtflys.forest.annotation.Query;
-import com.dtflys.forest.annotation.Request;
+import com.willing.openapi.entity.vo.AuthTokenResponse;
 import com.willing.openapi.entity.vo.CompanyDetailResponse;
 import com.willing.openapi.exception.WillingOpenApiErrorException;
-
-import java.io.IOException;
 
 
 /**
@@ -15,8 +14,21 @@ import java.io.IOException;
  * <p>
  * </p>
  */
-@BaseRequest(contentType = "application/json",baseURL = "https://open.demo.weiling.cn/")
+@BaseRequest(contentType = "application/json", baseURL = "https://open.demo.weiling.cn/")
 public interface WillingOpenApi {
+
+
+    /**
+     * 获取access_token
+     *
+     * @param appId
+     * @param appSecret
+     * @return {@link AuthTokenResponse}
+     * @throws WillingOpenApiErrorException
+     */
+    @Get("/openapi/auth/access_token/get")
+    AuthTokenResponse getAccessToken(@Query("app_id") String appId, @Query("app_secret") String appSecret) throws WillingOpenApiErrorException;
+
 
     /**
      * 获取企业详情
@@ -26,6 +38,6 @@ public interface WillingOpenApi {
      * @return
      * @throws WillingOpenApiErrorException
      */
-    @Request("/openapi/company/detail")
-    CompanyDetailResponse getCompanyDetail(@Query("company_id") String companyId, @Query("company_name") String companyName) throws WillingOpenApiErrorException, IOException;
+    @Get("/openapi/company/detail")
+    CompanyDetailResponse getCompanyDetail(@Query("company_id") String companyId, @Query("company_name") String companyName) throws WillingOpenApiErrorException;
 }

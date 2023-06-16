@@ -5,7 +5,9 @@ import com.dtflys.forest.Forest;
 import com.dtflys.forest.http.ForestRequest;
 import com.dtflys.forest.interceptor.Interceptor;
 import com.willing.openapi.base.WillingOpenapiAccessTokenProperties;
+import com.willing.openapi.entity.vo.AuthTokenResponse;
 import com.willing.openapi.service.iface.WillingOpenApi;
+import lombok.Data;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,14 +32,14 @@ public class OpenapiAccessTokenAutoConfiguration {
      */
     @Bean
     public WillingOpenApi willingOpenApi(WillingOpenapiAccessTokenProperties properties) {
-        this.properties = properties;
-        return Forest.config()
-//                .setBaseAddress(new ForestAddress("https", null, -1, properties.getUrl()))
+        WillingOpenApi willingOpenApi = Forest.config()
                 .setInterceptors(ListUtil.list(false, CustomRequestInterceptor.class))
                 .setMaxConnections(1000)
                 .setConnectTimeout(3000)
                 .setReadTimeout(3000)
                 .client(WillingOpenApi.class);
+        this.properties = properties;
+        return willingOpenApi;
     }
 
 
@@ -47,19 +49,18 @@ public class OpenapiAccessTokenAutoConfiguration {
      * @author xzhou
      * @date 2023/06/15
      */
-    public static class CustomRequestInterceptor<T> implements Interceptor<T> {
+    @Data
+    public class CustomRequestInterceptor<T> implements Interceptor<T> {
 
         @Override
         public boolean beforeExecute(ForestRequest request) {
             String url = request.getUrl();
 
-//            ForestRequest<?> getTokenRequest = Forest.get(properties.getUrl() + "/openapi/auth/access_token/get");
-//            getTokenRequest.addQuery("app_id", properties.getAppId());
-//            getTokenRequest.addQuery("app_secret", properties.getAppSecret());
-//            Object execute = getTokenRequest.execute();
+            Forest.get("")
 
+            AuthTokenResponse token = willingOpenApi.getAccessToken(properties.getAppId(), properties.getAppSecret());
             if (!url.contains("access_token")) {
-                request.setUrl(url + "?access_token=" + "ynnyxuEaskH5SItZCpyNrcSzNx3X7-ZxjSthxAPSkulECLC_425P4Dq2a16RQQC9e3OoLsviJgSwSM6rhxDebzdBqbAX23M70Yv62IIXSpF3bA_WflruEJr9-zIX9pqCbYG7fFIbPmBnNZwXzDk-1dyXctmgwCvZnEMU9uAhbWw");
+                request.setUrl(url + "?access_token=" + token.getData().getAccessToken());
             }
             return true;
         }
