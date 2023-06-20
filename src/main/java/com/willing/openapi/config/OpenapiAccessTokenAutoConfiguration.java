@@ -16,6 +16,12 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(WillingOpenapiAccessTokenProperties.class)
 public class OpenapiAccessTokenAutoConfiguration {
 
+    /**
+     * openapi服务
+     *
+     * @param properties 属性
+     * @return {@link WillingOpenapiService}
+     */
     @Bean
     public WillingOpenapiService willingOpenapiService(WillingOpenapiAccessTokenProperties properties) {
         return new WillingOpenapiService(properties);

@@ -32,18 +32,6 @@
             <optional>true</optional>
         </dependency>
 
-<!--        &lt;!&ndash;httpClient&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpcore</artifactId>-->
-<!--            <version>4.4.15</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpclient</artifactId>-->
-<!--            <version>4.5.13</version>-->
-<!--        </dependency>-->
-
 
         <dependency>
             <groupId>com.dtflys.forest</groupId>
@@ -67,10 +55,6 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.9.10</version>
         </dependency>
-
-
-
-
 
         <!--Redisson支持-->
         <dependency>
