@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @ConfigurationProperties(prefix = "willing.openapi")
-public class WillingOpenapiAccessTokenProperties {
+public class WillingOpenapiConfigProperties {
 
     /**
      * willing-开放平台-指定应用的appId

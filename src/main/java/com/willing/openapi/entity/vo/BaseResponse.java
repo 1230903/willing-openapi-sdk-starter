@@ -16,4 +16,8 @@ public class BaseResponse implements Serializable {
     private Integer code;
 
     private String msg;
+
+    public boolean isSuccess() {
+        return code == 0;
+    }
 }
