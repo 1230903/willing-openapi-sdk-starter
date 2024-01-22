@@ -11,8 +11,8 @@
     </parent>
 
     <groupId>com.willing</groupId>
-    <artifactId>willingOpenapi-springboot-starter</artifactId>
-    <version>0.0.1</version>
+    <artifactId>willing-openapi-springboot-starter</artifactId>
+    <version>0.0.2</version>
 
     <name>willingOpenapi-springboot-starter</name>
     <description>willingOpenapi-springboot-starter</description>

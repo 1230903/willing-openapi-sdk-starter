@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 /**
  * @author xiaozhou
- * @date 2023/6/3
  * <p>
  * 获取授权token的响应
  * </p>

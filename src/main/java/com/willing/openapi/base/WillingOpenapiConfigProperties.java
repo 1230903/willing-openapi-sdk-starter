@@ -6,7 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author xiaozhou
- * @date 2023/6/3
  * <p>
  * </p>
  */

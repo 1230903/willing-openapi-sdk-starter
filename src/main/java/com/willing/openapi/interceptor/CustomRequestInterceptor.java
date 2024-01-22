@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
  * 自定义请求拦截器
  *
  * @author xzhou
- * @date 2023/06/19
  */
 @Slf4j
 public class CustomRequestInterceptor<T> implements Interceptor<T> {
@@ -30,7 +29,7 @@ public class CustomRequestInterceptor<T> implements Interceptor<T> {
             if (StrUtil.isEmpty(baseUrl)) {
                 baseUrl = Constants.PRD_DOMAIN;
             }
-            String accessTokenUrl = StrUtil.format(baseUrl + Constants.Auth.authTokenUrl, appId, appSecret);
+            String accessTokenUrl = StrUtil.format(baseUrl + Constants.Auth.AUTH_TOKEN_URL, appId, appSecret);
             String resultStr = HttpUtil.get(accessTokenUrl);
             AuthTokenResponse accessTokenResp = JSONUtil.toBean(resultStr, AuthTokenResponse.class);
             log.info("获取accessToken结果:{}", JSONUtil.toJsonStr(accessTokenResp));
